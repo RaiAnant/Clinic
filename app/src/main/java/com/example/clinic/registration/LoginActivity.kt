@@ -11,10 +11,14 @@ import com.rahul.messmanagement.ui.registration.listeners.LoginInterfaceListener
 class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
 
     companion object {
+
         val docId: String = ""
         val name: String = ""
+        val password: String = ""
         val specialization: String = ""
         val location: String = ""
+        val phNo: String = ""
+
     }
 
     private val TAG = LoginActivity::class.java.simpleName
@@ -78,11 +82,23 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         with (sharedPref.edit()) {
             putBoolean(getString(R.string.pref_loggedIn), true)
-            putString(getString(R.string.pref_rollNo),
-                rollNo
+            putString(getString(R.string.doc_id),
+                docId
             )
-            putString(getString(R.string.pref_password),
+            putString(getString(R.string.doc_name),
+                name
+            )
+            putString(getString(R.string.password),
                 password
+            )
+            putString(getString(R.string.specialization),
+                specialization
+            )
+            putString(getString(R.string.location),
+                location
+            )
+            putString(getString(R.string.phno),
+                phNo
             )
             commit()
         }
