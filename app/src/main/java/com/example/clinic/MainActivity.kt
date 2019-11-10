@@ -9,7 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnCompleteListener<AuthResult> {
 
@@ -24,12 +24,7 @@ class MainActivity : AppCompatActivity(), OnCompleteListener<AuthResult> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mAuth = FirebaseAuth.getInstance()
-        submitButton.setOnClickListener {
-            val email: String = emailText.text.toString()
-            val password: String = passwordText.text.toString()
 
-            registerUser(email, password)
-        }
     }
 
     private fun registerUser(email: String, password: String) {
