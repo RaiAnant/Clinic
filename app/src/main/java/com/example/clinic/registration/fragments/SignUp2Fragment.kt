@@ -1,4 +1,4 @@
-package com.rahul.messmanagement.ui.registration.fragments
+package com.example.clinic.registration.fragments
 
 
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import com.example.clinic.MainActivity
+import com.example.clinic.R
+import com.example.clinic.registration.fragments.SignUpHandlerFragment
 
 import com.rahul.messmanagement.R
 import com.rahul.messmanagement.customuielements.ReselectableSpinner

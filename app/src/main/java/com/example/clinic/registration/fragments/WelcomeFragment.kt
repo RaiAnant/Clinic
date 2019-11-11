@@ -1,4 +1,4 @@
-package com.rahul.messmanagement.ui.registration.fragments
+package com.example.clinic.registration.fragments
 
 
 import android.animation.Animator
@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
 import com.rahul.messmanagement.MessApplication
 
 import com.rahul.messmanagement.R

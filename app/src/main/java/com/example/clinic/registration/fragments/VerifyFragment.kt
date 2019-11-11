@@ -1,4 +1,4 @@
-package com.rahul.messmanagement.ui.registration.fragments
+package com.example.clinic.registration.fragments
 
 
 import android.content.Context
@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.clinic.R
 import com.rahul.messmanagement.MessApplication
 
 import com.rahul.messmanagement.R

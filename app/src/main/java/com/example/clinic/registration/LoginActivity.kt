@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.clinic.R
+import com.example.clinic.registration.fragments.*
 import com.rahul.messmanagement.ui.registration.fragments.*
 import com.rahul.messmanagement.ui.registration.listeners.LoginInterfaceListener
 
@@ -12,13 +13,13 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
 
     companion object {
 
-        val docId: String = ""
-        val name: String = ""
-        val password: String = ""
-        val specialization: String = ""
-        val location: String = ""
-        val phNo: String = ""
-
+        var docId: String = ""
+        var name: String = ""
+        var password: String = ""
+        var specialization: String = ""
+        var location: String = ""
+        var phNo: String = ""
+        var email: String = ""
     }
 
     private val TAG = LoginActivity::class.java.simpleName
@@ -99,6 +100,9 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
             )
             putString(getString(R.string.phno),
                 phNo
+            )
+            putString(getString(R.string.email),
+            email
             )
             commit()
         }

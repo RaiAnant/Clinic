@@ -1,36 +1,39 @@
-package com.rahul.messmanagement.ui.registration.fragments
+package com.example.clinic.registration.fragments
 
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.rahul.messmanagement.MessApplication
+import com.example.clinic.R
+import com.google.firebase.auth.FirebaseAuth
 
-import com.rahul.messmanagement.R
-import com.rahul.messmanagement.data.DataRepository
-import com.rahul.messmanagement.data.network.NetworkResult
-import com.rahul.messmanagement.ui.registration.MainActivity
+
 import com.rahul.messmanagement.ui.registration.listeners.LoginInterfaceListener
+//import kotlinx.android.synthetic.main.fragment_apply_rebate.*
 import kotlinx.android.synthetic.main.fragment_roll_no.*
+//import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+//import androidx.test.orchestrator.junit.BundleJUnitUtils.getResult
+import com.google.firebase.auth.SignInMethodQueryResult
+import com.google.android.gms.tasks.OnCompleteListener
+import com.example.clinic.registration.LoginActivity
 
 
 class RollNoFragment : Fragment(), CoroutineScope {
 
     private val TAG = RollNoFragment::class.java.simpleName
-    private lateinit var dataRepository: DataRepository
+//    private lateinit var dataRepository: DataRepository
+    private lateinit var mAuth: FirebaseAuth
     private lateinit var loginInterfaceListener: LoginInterfaceListener
 
     private var job: Job = Job()
@@ -43,6 +46,7 @@ class RollNoFragment : Fragment(), CoroutineScope {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        mAuth = FirebaseAuth.getInstance()
         return inflater.inflate(R.layout.fragment_roll_no, container, false)
     }
 
@@ -54,6 +58,7 @@ class RollNoFragment : Fragment(), CoroutineScope {
     }
 
     private fun activateButton() {
+
         continueButton.setOnClickListener {
             if(!rollNoEditText.text.toString().matches("[A-Z]{3}[0-9]{7}".toRegex())) {
                 rollNoInputLayout.error = "Not a valid roll no"
@@ -81,7 +86,6 @@ class RollNoFragment : Fragment(), CoroutineScope {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        dataRepository = (activity?.application as MessApplication).appComponent.getRepository()
         loginInterfaceListener = activity as LoginInterfaceListener
     }
 
@@ -109,50 +113,39 @@ class RollNoFragment : Fragment(), CoroutineScope {
 
         rollNoInputLayout.error = null
 
-        launch {
-            val result = dataRepository.checkRegistrationStatus(rollNo)
-            when(result) {
-                is NetworkResult.Ok -> {
-                    Log.d(TAG, result.value.status.toString())
-
-                    MainActivity.rollNo = rollNo
-                    if(!result.value.status) {
-                        loginInterfaceListener.switchToFragment(1)
-                    } else {
-                        loginInterfaceListener.switchToFragment(2)
-                    }
-                }
-                is NetworkResult.Error -> {
-                    Log.d(TAG, result.exception.toString())
-                    showButton()
-                }
-                is NetworkResult.Exception -> {
-                    Log.d(TAG, result.exception.toString())
-                    showButton()
-                }
-            }
-        }
-    }
-
-    private fun showButton() {
-        activity!!.runOnUiThread {
-            val cx = continueButton.width / 2
-            val cy = continueButton.height / 2
-
-            val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
-            val animator = ViewAnimationUtils.createCircularReveal(continueButton, cx, cy, 0f, finalRadius)
-            animator.duration = 250L
-
-            animator.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationStart(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    continueButton.visibility = View.VISIBLE
-                    continueProgressBar.visibility = View.GONE
+        mAuth.fetchSignInMethodsForEmail(rollNo)
+            .addOnCompleteListener(OnCompleteListener<SignInMethodQueryResult> { task ->
+                val isNewUser = task.result!!.signInMethods!!.isEmpty()
+                LoginActivity.email = rollNo
+                if (isNewUser) {
+                    loginInterfaceListener.switchToFragment(2)
+                } else {
+                    loginInterfaceListener.switchToFragment(1)
                 }
             })
 
-            animator.start()
-        }
 
+        }
     }
-}
+
+//    private fun showButton() {
+//        activity!!.runOnUiThread {
+//            val cx = continueButton.width / 2
+//            val cy = continueButton.height / 2
+//
+//            val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+//            val animator = ViewAnimationUtils.createCircularReveal(continueButton, cx, cy, 0f, finalRadius)
+//            animator.duration = 250L
+//
+//            animator.addListener(object : AnimatorListenerAdapter() {
+//                override fun onAnimationStart(animation: Animator?) {
+//                    super.onAnimationEnd(animation)
+//                    continueButton.visibility = View.VISIBLE
+//                    continueProgressBar.visibility = View.GONE
+//                }
+//            })
+//
+//            animator.start()
+//        }
+//
+//    }

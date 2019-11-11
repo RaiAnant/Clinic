@@ -1,4 +1,4 @@
-package com.rahul.messmanagement.ui.registration.fragments
+package com.example.clinic.registration.fragments
 
 
 import android.animation.Animator

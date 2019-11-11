@@ -9,4 +9,5 @@
     <string name="specialization">specialization</string>
     <string name="location">location</string>
     <string name="phno">phno</string>
+    <string name="email">email</string>
 </resources>

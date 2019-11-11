@@ -1,4 +1,4 @@
-package com.rahul.messmanagement.ui.registration.fragments
+package com.example.clinic.registration.fragments
 
 
 import android.os.Bundle
@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.clinic.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-import com.rahul.messmanagement.R
-import kotlinx.android.synthetic.main.fragment_signing_up.*
+//import kotlinx.android.synthetic.main.fragment_signing_up.*
 
 class SigningUpFragment : Fragment() {
 

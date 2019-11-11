@@ -1,4 +1,4 @@
-package com.rahul.messmanagement.ui.registration.fragments
+package com.example.clinic.registration.fragments
 
 
 import android.content.Context
@@ -8,16 +8,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.rahul.messmanagement.MessApplication
-
-import com.rahul.messmanagement.R
-import com.rahul.messmanagement.data.DataRepository
-import com.rahul.messmanagement.data.network.NetworkResult
+import com.example.clinic.R
+//import com.rahul.messmanagement.MessApplication
+//
+//import com.rahul.messmanagement.R
+//import com.rahul.messmanagement.data.DataRepository
+//import com.rahul.messmanagement.data.network.NetworkResult
 import com.rahul.messmanagement.ui.registration.listeners.LoginInterfaceListener
 import kotlinx.android.synthetic.main.fragment_sign_up_handler.*
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +29,6 @@ import kotlin.coroutines.CoroutineContext
 class SignUpHandlerFragment : Fragment(), CoroutineScope {
 
     private val TAG = SignUpHandlerFragment::class.java.simpleName
-    private lateinit var dataRepository: DataRepository
     private lateinit var loginInterfaceListener: LoginInterfaceListener
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
@@ -54,8 +53,7 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        dataRepository = (activity?.application as MessApplication).appComponent.getRepository()
-        loginInterfaceListener = activity as LoginInterfaceListener
+       loginInterfaceListener = activity as LoginInterfaceListener
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -99,29 +97,32 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
     }
 
     private fun startSignUp() {
-        launch {
-            val result = dataRepository.signUp()
-            when(result) {
-                is NetworkResult.Ok -> {
-                    Log.d(TAG, result.value.status.toString())
 
-                    if(result.value.status) {
-                        activity?.runOnUiThread{
-                            SigningUpFragment.showDone()
-                            Handler().postDelayed(Runnable {
-                                loginInterfaceListener.switchToFragment(3)
-                            }, 200)
 
-                        }
-                    }
-                }
-                is NetworkResult.Error -> {
-                    Log.d(TAG, result.exception.toString())
-                }
-                is NetworkResult.Exception -> {
-                    Log.d(TAG, result.exception.toString())
-                }
-            }
-        }
+
+//        launch {
+//            val result = dataRepository.signUp()
+//            when(result) {
+//                is NetworkResult.Ok -> {
+//                    Log.d(TAG, result.value.status.toString())
+//
+//                    if(result.value.status) {
+//                        activity?.runOnUiThread{
+//                            SigningUpFragment.showDone()
+//                            Handler().postDelayed(Runnable {
+//                                loginInterfaceListener.switchToFragment(3)
+//                            }, 200)
+//
+//                        }
+//                    }
+//                }
+//                is NetworkResult.Error -> {
+//                    Log.d(TAG, result.exception.toString())
+//                }
+//                is NetworkResult.Exception -> {
+//                    Log.d(TAG, result.exception.toString())
+//                }
+//            }
+//        }
     }
 }
