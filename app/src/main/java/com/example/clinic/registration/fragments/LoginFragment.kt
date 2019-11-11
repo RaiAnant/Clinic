@@ -11,44 +11,35 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.rahul.messmanagement.MessApplication
-
-import com.rahul.messmanagement.R
-import com.rahul.messmanagement.data.DataRepository
-import com.rahul.messmanagement.data.network.NetworkResult
-import com.rahul.messmanagement.ui.registration.MainActivity
 import com.rahul.messmanagement.ui.registration.listeners.LoginInterfaceListener
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 import android.view.inputmethod.InputMethodManager
+import com.example.clinic.R
+import com.example.clinic.registration.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.fragment_login.*
 
 
-class LoginFragment : Fragment(), CoroutineScope {
+
+
+
+class LoginFragment : Fragment() {
 
     private val TAG = LoginFragment::class.java.simpleName
-    private lateinit var dataRepository: DataRepository
     private lateinit var loginInterfaceListener: LoginInterfaceListener
+    private lateinit var mAuth: FirebaseAuth
 
-    private var job: Job = Job()
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        mAuth = FirebaseAuth.getInstance()
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        dataRepository = (activity?.application as MessApplication).appComponent.getRepository()
         loginInterfaceListener = activity as LoginInterfaceListener
     }
 
@@ -56,16 +47,17 @@ class LoginFragment : Fragment(), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataRepository.deleteAll()
-        rollNoTextView.text = MainActivity.rollNo
+        rollNoTextView.text = LoginActivity.email
         passwordEditText.requestFocus()
 
         activateButton()
     }
+
     private fun activateButton() {
         continueButton.setOnClickListener {
             try {
-                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(it.windowToken, 0)
             } catch (e: Exception) {
 
@@ -88,7 +80,8 @@ class LoginFragment : Fragment(), CoroutineScope {
         val cy = continueButton.height / 2
 
         val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
-        val animator = ViewAnimationUtils.createCircularReveal(continueButton, cx, cy, finalRadius, 0f)
+        val animator =
+            ViewAnimationUtils.createCircularReveal(continueButton, cx, cy, finalRadius, 0f)
         animator.duration = 250L
 
         animator.addListener(object : AnimatorListenerAdapter() {
@@ -104,42 +97,30 @@ class LoginFragment : Fragment(), CoroutineScope {
 
     private fun tryLogin() {
         val password = passwordEditText.text.toString()
-        launch {
-            val result = dataRepository.login(MainActivity.rollNo, password)
-            when(result) {
-                is NetworkResult.Ok -> {
-                    Log.d(TAG, result.value.status.toString())
 
-                    if(result.value.status) {
-                        MainActivity.password = password
-                        loginInterfaceListener.switchToFragment(3)
-                    } else {
-                        activity!!.runOnUiThread{
-                            passwordInputLayout.error = "Incorrect Password"
-                        }
+//        mAuth.signInWithEmailAndPassword(rollNoTextView.text.toString(), password).addOnCompleteListener {  }
 
-                        showButton()
-                    }
-                }
-                is NetworkResult.Error -> {
-                    Log.d(TAG, result.exception.toString())
+        mAuth.signInWithEmailAndPassword(rollNoTextView.text.toString(), password)
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    passwordInputLayout.error = "Incorrect Password"
                     showButton()
-                }
-                is NetworkResult.Exception -> {
-                    Log.d(TAG, result.exception.toString())
-                    showButton()
+                } else {
+                    LoginActivity.password = password
+                    loginInterfaceListener.switchToFragment(3)
+
                 }
             }
-        }
     }
 
     private fun showButton() {
-        activity!!.runOnUiThread {
+
             val cx = continueButton.width / 2
             val cy = continueButton.height / 2
 
             val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
-            val animator = ViewAnimationUtils.createCircularReveal(continueButton, cx, cy, 0f, finalRadius)
+            val animator =
+                ViewAnimationUtils.createCircularReveal(continueButton, cx, cy, 0f, finalRadius)
             animator.duration = 250L
 
             animator.addListener(object : AnimatorListenerAdapter() {
@@ -156,7 +137,6 @@ class LoginFragment : Fragment(), CoroutineScope {
             })
 
             animator.start()
-        }
 
     }
 }

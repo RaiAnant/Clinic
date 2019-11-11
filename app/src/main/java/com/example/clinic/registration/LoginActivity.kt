@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.clinic.R
 import com.example.clinic.registration.fragments.*
-import com.rahul.messmanagement.ui.registration.fragments.*
 import com.rahul.messmanagement.ui.registration.listeners.LoginInterfaceListener
 
 class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
@@ -28,7 +27,7 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
         val sharedPref = this.getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
@@ -37,10 +36,7 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
 
         if(fragment == null) {
             try {
-                fragment = when(isLoggedIn) {
-                    false -> RollNoFragment()
-                    true -> VerifyFragment()
-                }
+                fragment = RollNoFragment()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -65,7 +61,6 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
         val nextFragment : Fragment = when(fragmentNo) {
             1 -> LoginFragment()
             2 -> SignUpHandlerFragment()
-            3 -> VerifyFragment()
             else -> WelcomeFragment()
         }
 

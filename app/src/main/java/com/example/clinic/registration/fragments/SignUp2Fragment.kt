@@ -10,11 +10,9 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.example.clinic.MainActivity
 import com.example.clinic.R
+import com.example.clinic.customuielements.ReselectableSpinner
+import com.example.clinic.registration.LoginActivity
 import com.example.clinic.registration.fragments.SignUpHandlerFragment
-
-import com.rahul.messmanagement.R
-import com.rahul.messmanagement.customuielements.ReselectableSpinner
-import com.rahul.messmanagement.ui.registration.MainActivity
 import kotlinx.android.synthetic.main.fragment_sign_up2.*
 
 
@@ -34,7 +32,7 @@ class SignUp2Fragment : Fragment() , ReselectableSpinner.OnSpinnerCancelledListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        emailEditText.setText(MainActivity.rollNo.toLowerCase() + "@iiita.ac.in")
+        emailEditText.setText(LoginActivity.email)
         messEditText.showSoftInputOnFocus = false
         val messAdapter = ArrayAdapter<String>(context!!, R.layout.list_item_spinner_drop_down, allMessList)
         messSpinnerView.adapter = messAdapter
@@ -85,9 +83,8 @@ class SignUp2Fragment : Fragment() , ReselectableSpinner.OnSpinnerCancelledListe
                 messInputLayout.error = null
             }
 
-            MainActivity.name = name
-            MainActivity.email = email
-            MainActivity.mess = mess
+            LoginActivity.name = name
+//            LoginActivity.mess = mess
 
             SignUpHandlerFragment.viewPager.currentItem = 2
         }

@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.clinic.R
 import com.example.clinic.registration.fragments.SignUpHandlerFragment
-
-import com.rahul.messmanagement.R
-import com.rahul.messmanagement.ui.registration.MainActivity
 import kotlinx.android.synthetic.main.fragment_sign_up3.*
+
+//import com.rahul.messmanagement.R
+//import com.rahul.messmanagement.ui.registration.MainActivity
+//import kotlinx.android.synthetic.main.fragment_sign_up3.*
 
 class SignUp3Fragment : Fragment() {
 
@@ -67,11 +68,11 @@ class SignUp3Fragment : Fragment() {
                 bankBranchInputLayout.error = null
             }
 
-            MainActivity.accountHolderName = name
-            MainActivity.accountNo = accNo
-            MainActivity.ifscCode = ifscCode
-            MainActivity.bankName = bankName
-            MainActivity.bankBranch = bankBranch
+//            MainActivity.accountHolderName = name
+//            MainActivity.accountNo = accNo
+//            MainActivity.ifscCode = ifscCode
+//            MainActivity.bankName = bankName
+//            MainActivity.bankBranch = bankBranch
 
             SignUpHandlerFragment.viewPager.currentItem = 3
         }

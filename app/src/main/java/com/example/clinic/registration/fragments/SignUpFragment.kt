@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.clinic.R
+import com.example.clinic.registration.LoginActivity
 import com.example.clinic.registration.fragments.SignUpHandlerFragment
+import kotlinx.android.synthetic.main.fragment_sign_up.*
 
 
 class SignUpFragment : Fragment() {
@@ -23,7 +25,7 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rollNoEditText.setText(MainActivity.rollNo)
+        rollNoEditText.setText(LoginActivity.email)
 
         button.setOnClickListener {
             val password1 = passwordEditText.text.toString()
@@ -43,7 +45,7 @@ class SignUpFragment : Fragment() {
                 password2InputLayout.error = null
             }
 
-            MainActivity.password = password1
+            LoginActivity.password = password1
 
             SignUpHandlerFragment.viewPager.currentItem = 1
         }

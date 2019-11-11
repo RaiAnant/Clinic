@@ -12,7 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.example.clinic.R
+import com.example.clinic.registration.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 //import com.rahul.messmanagement.MessApplication
 //
 //import com.rahul.messmanagement.R
@@ -25,11 +26,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.AuthResult
+import com.google.android.gms.tasks.Task
+import androidx.annotation.NonNull
+import com.google.android.gms.tasks.OnCompleteListener
+import android.R.attr.password
+import android.R
+import com.google.firebase.database.FirebaseDatabase
+
 
 class SignUpHandlerFragment : Fragment(), CoroutineScope {
 
     private val TAG = SignUpHandlerFragment::class.java.simpleName
     private lateinit var loginInterfaceListener: LoginInterfaceListener
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
@@ -47,7 +61,9 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up_handler, container, false)
+        mAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+        return inflater.inflate(com.example.clinic.R.layout.fragment_sign_up_handler, container, false)
     }
 
 
@@ -70,7 +86,7 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
             }
 
             override fun onPageSelected(position: Int) {
-                if(position == 3) {
+                if(position == 2) {
                     startSignUp()
                 }
 
@@ -85,7 +101,7 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
             return when (position) {
                 0 -> SignUpFragment()
                 1 -> SignUp2Fragment()
-                2 -> SignUp3Fragment()
+//                2 -> SignUp3Fragment()
                 else -> SigningUpFragment()
             }
         }
@@ -97,6 +113,21 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
     }
 
     private fun startSignUp() {
+
+
+        mAuth.createUserWithEmailAndPassword(LoginActivity.email, LoginActivity.password).addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d(TAG, "registration failed")
+            }else{
+                database.getReference("")
+                SigningUpFragment.showDone()
+                Handler().postDelayed(Runnable {
+                    loginInterfaceListener.switchToFragment(3)
+                }, 200)
+            }
+        }
+
+
 
 
 

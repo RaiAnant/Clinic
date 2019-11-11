@@ -29,17 +29,13 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.example.clinic.registration.LoginActivity
 
 
-class RollNoFragment : Fragment(), CoroutineScope {
+class RollNoFragment : Fragment(){
 
     private val TAG = RollNoFragment::class.java.simpleName
 //    private lateinit var dataRepository: DataRepository
     private lateinit var mAuth: FirebaseAuth
     private lateinit var loginInterfaceListener: LoginInterfaceListener
 
-    private var job: Job = Job()
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,10 +56,10 @@ class RollNoFragment : Fragment(), CoroutineScope {
     private fun activateButton() {
 
         continueButton.setOnClickListener {
-            if(!rollNoEditText.text.toString().matches("[A-Z]{3}[0-9]{7}".toRegex())) {
-                rollNoInputLayout.error = "Not a valid roll no"
-                return@setOnClickListener
-            }
+//            if(!rollNoEditText.text.toString().matches("[A-Z]{3}[0-9]{7}".toRegex())) {
+//                rollNoInputLayout.error = "Not a valid roll no"
+//                return@setOnClickListener
+//            }
 
             try {
                 val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
