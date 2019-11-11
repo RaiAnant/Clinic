@@ -40,15 +40,32 @@
                 android:layout_marginEnd="24dp" app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/emailInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="E-Mail"
+                android:hint="Specialization"
                 android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/nameInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/emailEditText"
-                    android:inputType="textEmailAddress"
             />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/phnoInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Mob-Number"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/phnoEditText"
+                android:inputType="phone"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -58,8 +75,8 @@
                 android:layout_marginEnd="24dp" app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/messInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Mess"
-                android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
+                android:hint="Location"
+                android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/phnoInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
