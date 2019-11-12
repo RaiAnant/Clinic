@@ -35,6 +35,7 @@ import androidx.annotation.NonNull
 import com.google.android.gms.tasks.OnCompleteListener
 import android.R.attr.password
 import android.R
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -113,13 +114,14 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
     }
 
     private fun startSignUp() {
-
+        var ref:DatabaseReference
 
         mAuth.createUserWithEmailAndPassword(LoginActivity.email, LoginActivity.password).addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.d(TAG, "registration failed")
             }else{
-                database.getReference("")
+                ref = database.getReference(LoginActivity.email)
+                saveValuesToDatabase(ref)
                 SigningUpFragment.showDone()
                 Handler().postDelayed(Runnable {
                     loginInterfaceListener.switchToFragment(3)
@@ -127,33 +129,15 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
             }
         }
 
+    }
+
+    private fun saveValuesToDatabase(reference: DatabaseReference){
+        reference.child("password").setValue(LoginActivity.password)
+        reference.child("location").setValue(LoginActivity.location)
+        reference.child("name").setValue(LoginActivity.name)
+        reference.child("phNo").setValue(LoginActivity.phNo)
+        reference.child("specialization").setValue(LoginActivity.specialization)
 
 
-
-
-//        launch {
-//            val result = dataRepository.signUp()
-//            when(result) {
-//                is NetworkResult.Ok -> {
-//                    Log.d(TAG, result.value.status.toString())
-//
-//                    if(result.value.status) {
-//                        activity?.runOnUiThread{
-//                            SigningUpFragment.showDone()
-//                            Handler().postDelayed(Runnable {
-//                                loginInterfaceListener.switchToFragment(3)
-//                            }, 200)
-//
-//                        }
-//                    }
-//                }
-//                is NetworkResult.Error -> {
-//                    Log.d(TAG, result.exception.toString())
-//                }
-//                is NetworkResult.Exception -> {
-//                    Log.d(TAG, result.exception.toString())
-//                }
-//            }
-//        }
     }
 }

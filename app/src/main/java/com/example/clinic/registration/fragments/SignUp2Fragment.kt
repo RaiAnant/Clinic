@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_sign_up2.*
 class SignUp2Fragment : Fragment() , ReselectableSpinner.OnSpinnerCancelledListener {
 
     private var selectedPosition = -1
-    private var allMessList = arrayOf("BH1", "BH2", "BH3", "BH4", "BH5", "GH1", "GH2", "GH3")
+    private var allMessList = arrayOf("Allahabad", "Mumbai", "Delhi", "Banglore", "Ahemdebad", "Luckhnow", "Kolkatta", "Chennai")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +61,7 @@ class SignUp2Fragment : Fragment() , ReselectableSpinner.OnSpinnerCancelledListe
             val name = nameEditText.text.toString()
             val email = emailEditText.text.toString()
             val mess = messEditText.text.toString()
+            val phNo:String = phnoEditText.text.toString()
 
             if(name.isEmpty()){
                 nameInputLayout.error = "Should not be blank"
@@ -84,7 +85,9 @@ class SignUp2Fragment : Fragment() , ReselectableSpinner.OnSpinnerCancelledListe
             }
 
             LoginActivity.name = name
-//            LoginActivity.mess = mess
+            LoginActivity.location = mess
+            LoginActivity.specialization = email
+            LoginActivity.phNo = phNo
 
             SignUpHandlerFragment.viewPager.currentItem = 2
         }
