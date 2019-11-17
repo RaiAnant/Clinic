@@ -28,12 +28,6 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        val sharedPref = this.getSharedPreferences(
-            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-
-        val isLoggedIn = sharedPref.getBoolean(getString(R.string.pref_loggedIn), false)
-
         if(fragment == null) {
             try {
                 fragment = RollNoFragment()
@@ -47,16 +41,7 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
 
     override fun switchToFragment(fragmentNo: Int) {
 
-        if(fragmentNo == 3) {
-            saveDetails()
-        } else if(fragmentNo == 4) {
-            val sharedPref = this.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-            with (sharedPref.edit()) {
-                putBoolean(getString(R.string.pref_Verified), true)
-                commit()
-            }
-        }
+
 
         val nextFragment : Fragment = when(fragmentNo) {
             1 -> LoginFragment()
@@ -73,33 +58,5 @@ class LoginActivity : AppCompatActivity(), LoginInterfaceListener {
             replace(R.id.loginContentView, nextFragment).commit()
     }
 
-    private fun saveDetails() {
-        val sharedPref = this.getSharedPreferences(
-            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        with (sharedPref.edit()) {
-            putBoolean(getString(R.string.pref_loggedIn), true)
-            putString(getString(R.string.doc_id),
-                docId
-            )
-            putString(getString(R.string.doc_name),
-                name
-            )
-            putString(getString(R.string.password),
-                password
-            )
-            putString(getString(R.string.specialization),
-                specialization
-            )
-            putString(getString(R.string.location),
-                location
-            )
-            putString(getString(R.string.phno),
-                phNo
-            )
-            putString(getString(R.string.email),
-            email
-            )
-            commit()
-        }
-    }
+
 }

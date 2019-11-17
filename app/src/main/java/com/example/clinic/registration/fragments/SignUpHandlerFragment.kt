@@ -2,6 +2,7 @@ package com.example.clinic.registration.fragments
 
 
 import android.content.Context
+import android.nfc.Tag
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -12,29 +13,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.example.clinic.Model.Doctor
 import com.example.clinic.registration.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
-//import com.rahul.messmanagement.MessApplication
-//
-//import com.rahul.messmanagement.R
-//import com.rahul.messmanagement.data.DataRepository
-//import com.rahul.messmanagement.data.network.NetworkResult
 import com.rahul.messmanagement.ui.registration.listeners.LoginInterfaceListener
 import kotlinx.android.synthetic.main.fragment_sign_up_handler.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.auth.AuthResult
-import com.google.android.gms.tasks.Task
-import androidx.annotation.NonNull
-import com.google.android.gms.tasks.OnCompleteListener
-import android.R.attr.password
-import android.R
+
+import com.example.clinic.R
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -109,19 +98,16 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
 
         override fun getCount(): Int {
             // Show 4 total pages.
-            return 4
+            return 3
         }
     }
 
     private fun startSignUp() {
-        var ref:DatabaseReference
-
         mAuth.createUserWithEmailAndPassword(LoginActivity.email, LoginActivity.password).addOnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.d(TAG, "registration failed")
+                Log.e(TAG, "registration failed")
             }else{
-                ref = database.getReference(LoginActivity.email)
-                saveValuesToDatabase(ref)
+                saveValuesToDatabase(database.getReference(mAuth.currentUser!!.uid))
                 SigningUpFragment.showDone()
                 Handler().postDelayed(Runnable {
                     loginInterfaceListener.switchToFragment(3)
@@ -132,12 +118,7 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
     }
 
     private fun saveValuesToDatabase(reference: DatabaseReference){
-        reference.child("password").setValue(LoginActivity.password)
-        reference.child("location").setValue(LoginActivity.location)
-        reference.child("name").setValue(LoginActivity.name)
-        reference.child("phNo").setValue(LoginActivity.phNo)
-        reference.child("specialization").setValue(LoginActivity.specialization)
-
-
+        Log.d(TAG, "Trying to push value")
+        reference.setValue(Doctor(mAuth.currentUser!!.uid, LoginActivity.name, LoginActivity.specialization, LoginActivity.phNo, LoginActivity.location))
     }
 }

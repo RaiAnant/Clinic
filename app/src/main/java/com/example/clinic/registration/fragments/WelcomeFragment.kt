@@ -12,27 +12,32 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.clinic.MainActivity
+import com.example.clinic.Model.Doctor
 import com.example.clinic.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
-//import com.rahul.messmanagement.R
-//import com.rahul.messmanagement.data.DataRepository
-//import com.rahul.messmanagement.data.network.NetworkResult
-//import com.rahul.messmanagement.ui.registration.MainActivity
 import com.rahul.messmanagement.ui.registration.listeners.LoginInterfaceListener
 import kotlinx.android.synthetic.main.fragment_welcome.*
-//import com.rahul.messmanagement.data.network.networkmodels.User
-//import com.rahul.messmanagement.ui.HomeActivity
-//import kotlinx.android.synthetic.main.fragment_welcome.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
+
+
+
 
 class WelcomeFragment : Fragment(), CoroutineScope {
 
     private val TAG = WelcomeFragment::class.java.simpleName
     private lateinit var loginInterfaceListener: LoginInterfaceListener
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
 
     private var job: Job = Job()
 
@@ -44,6 +49,8 @@ class WelcomeFragment : Fragment(), CoroutineScope {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        mAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
         return inflater.inflate(R.layout.fragment_welcome, container, false)
     }
 
@@ -59,11 +66,15 @@ class WelcomeFragment : Fragment(), CoroutineScope {
     }
 
     fun getDetails() {
+        if(mAuth.currentUser !=null) {
+            Log.v(TAG,"inside getDetails")
+            saveDetails(mAuth.currentUser!!.uid, database.getReference(mAuth.currentUser!!.uid))
+            showButton()
+        }else{
+            Log.v(TAG,"inside failed to get details")
+            SignUpHandlerFragment.viewPager.currentItem = 1
+        }
 
-
-//        saveDetails(result.value)
-
-        showButton()
 //        launch {
 //            val result = dataRepository.loginGet(MainActivity.rollNo)
 //
@@ -104,27 +115,48 @@ class WelcomeFragment : Fragment(), CoroutineScope {
 //        }
     }
 
-//    private fun saveDetails(user: User) {
-//        val sharedPref = activity!!.getSharedPreferences(
-//            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-//        with (sharedPref.edit()) {
-//            putBoolean(getString(R.string.pref_loggedIn), true)
-//            putString(getString(R.string.pref_rollNo), user.rollNo)
-//            putString(getString(R.string.pref_password), user.password)
-//            putString(getString(R.string.pref_email), user.email)
-//            putString(getString(R.string.pref_name), user.name)
-//            putString(getString(R.string.pref_mess), user.mess)
-//            putString(getString(R.string.pref_holderName), user.accountHolderName)
-//            putString(getString(R.string.pref_accountNo), user.accountNo)
-//            putString(getString(R.string.pref_ifscCode), user.IFSCCode)
-//            putString(getString(R.string.pref_bankBranch), user.bankBranch)
-//            putString(getString(R.string.pref_bankName), user.bankName)
-//            commit()
-//        }
-//
-//        startActivity(Intent(activity, HomeActivity::class.java))
-//        activity?.finish()
-//    }
+    private fun saveDetails(uid: String, reference: DatabaseReference) {
+        val sharedPref = activity!!.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+               val doc = dataSnapshot.getValue(Doctor::class.java)
+
+                doc?.let { doctor ->
+                    saveDetailsOfDoctor(doctor)
+                    startActivity(Intent(activity, MainActivity::class.java))
+                    activity?.finish()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // ...
+            }
+        })
+
+
+
+
+    }
+
+    private fun saveDetailsOfDoctor(doctor: Doctor) {
+        val sharedPref = activity!!.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        with (sharedPref.edit()) {
+            putBoolean(getString(R.string.pref_loggedIn), true)
+            putString(getString(R.string.doc_name), doctor.name)
+            putString(getString(R.string.phno), doctor.phoneNo)
+            putString(getString(R.string.doc_id), doctor.docId)
+            putString(getString(R.string.specialization), doctor.specialization)
+            putString(getString(R.string.location), doctor.location)
+            putBoolean(getString(R.string.pref_Verified),true)
+            commit()
+        }
+
+        Log.d("Welcome", "Entered to firebase")
+    }
 
     private fun showButton() {
         activity!!.runOnUiThread {
