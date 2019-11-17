@@ -32,7 +32,6 @@ class SignUp2Fragment : Fragment() , ReselectableSpinner.OnSpinnerCancelledListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        emailEditText.setText(LoginActivity.email)
         messEditText.showSoftInputOnFocus = false
         val messAdapter = ArrayAdapter<String>(context!!, R.layout.list_item_spinner_drop_down, allMessList)
         messSpinnerView.adapter = messAdapter

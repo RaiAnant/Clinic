@@ -74,45 +74,6 @@ class WelcomeFragment : Fragment(), CoroutineScope {
             Log.v(TAG,"inside failed to get details")
             SignUpHandlerFragment.viewPager.currentItem = 1
         }
-
-//        launch {
-//            val result = dataRepository.loginGet(MainActivity.rollNo)
-//
-//            when(result) {
-//                is NetworkResult.Ok -> {
-//                    Log.d(TAG, result.value.name)
-//
-//                    val result2 = dataRepository.getAttendanceFromServer(MainActivity.rollNo)
-//                    when(result2) {
-//                        is NetworkResult.Ok -> {
-//                            dataRepository.saveAllAttendance(result2.value)
-//
-//                            val result3 = dataRepository.getMenuFromServer(result.value.mess)
-//
-//                            when(result3) {
-//                                is NetworkResult.Ok -> {
-//                                    dataRepository.saveAllMenu(result3.value)
-//                                    activity?.runOnUiThread {
-//                                        saveDetails(result.value)
-//
-//                                        showButton()
-//                                    }
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//                }
-//                is NetworkResult.Error -> {
-//                    Log.d(TAG, result.exception.toString())
-//                    showButton()
-//                }
-//                is NetworkResult.Exception -> {
-//                    Log.d(TAG, result.exception.toString())
-//                    showButton()
-//                }
-//            }
-//        }
     }
 
     private fun saveDetails(uid: String, reference: DatabaseReference) {

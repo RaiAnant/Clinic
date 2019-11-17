@@ -107,7 +107,7 @@ class SignUpHandlerFragment : Fragment(), CoroutineScope {
             if (!task.isSuccessful) {
                 Log.e(TAG, "registration failed")
             }else{
-                saveValuesToDatabase(database.getReference(mAuth.currentUser!!.uid))
+                saveValuesToDatabase(database.getReference("doctor/"+mAuth.currentUser!!.uid))
                 SigningUpFragment.showDone()
                 Handler().postDelayed(Runnable {
                     loginInterfaceListener.switchToFragment(3)
