@@ -40,7 +40,7 @@ class MedicineAdaptor( val context: Context) : RecyclerView.Adapter<MedicineAdap
             timeOfMedicine.text = time
             Log.d("MwedicineAdaptor", medicine.breakfast.toString())
             quantity.text = medicine.quantity
-
+            time = ""
         }
     }
 
