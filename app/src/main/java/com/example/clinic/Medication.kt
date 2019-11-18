@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_medication.*
 import java.lang.Exception
@@ -73,11 +74,15 @@ class Medication : AppCompatActivity() {
         checkBox2!!.isChecked=false
         checkBox3!!.isChecked=false
 
+        breakfast = 0
+        lunch = 0
+        dinner = 0
+
     }
 
     fun submitData(view: View) {
-        databaseRef.push().setValue(Medication_item("Ambuj", AddMedication.diseaseName, System.currentTimeMillis(),
-            (TimeUtils.getTodaysMidninghtTimeInMillis()+AddMedication.lengthOfMedication*86400*1000).toLong(), medicines))
+        databaseRef.push().setValue(Medication_item(FirebaseAuth.getInstance().currentUser!!.displayName!!, AddMedication.diseaseName, TimeUtils.getTodaysMidninghtTimeInMillis(),
+            (TimeUtils.getTodaysMidninghtTimeInMillis()+AddMedication.lengthOfMedication*86400*1000), medicines))
 
         Toast.makeText(applicationContext,"Medication Uploaded",Toast.LENGTH_SHORT).show()
 
