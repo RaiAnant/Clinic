@@ -3,9 +3,10 @@
     <color name="colorPrimary">#00897B</color>
     <color name="colorPrimaryDark">#004D40</color>
     <color name="graylight">#fafafa</color>
-    <color name="startblue">#00897B</color>
+    <color name="buttonColor">#EC3B3B</color>
     <color name="endblue">#0bcce6</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorTextWhite">#ffffff</color>
-
+    <color name="jetBlack">#36373a</color>
+    <color name="white">#FFFFFF</color>
 </resources>

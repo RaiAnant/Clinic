@@ -42,6 +42,17 @@ class Medication : AppCompatActivity() {
 
         name =  medicineName.text.toString()
         quantity = quantityEntry.text.toString()
+
+
+        if(name==""){
+            Toast.makeText(applicationContext,"Enter a Medicine",Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(quantity==""){
+            Toast.makeText(applicationContext,"Enter quantity of dose",Toast.LENGTH_SHORT).show()
+            return
+        }
+
         startDate = TimeUtils.getTodaysMidninghtTimeInMillis()
         endDate = startDate + noDaysMedication*86400*1000
 
