@@ -8,8 +8,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="378dp"
-        android:layout_height="293dp"
+        android:layout_width="379dp"
+        android:layout_height="275dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -19,7 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="291dp">
+            android:layout_height="275dp">
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -29,19 +29,19 @@
                 android:layout_marginTop="32dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/index"/>
+                app:srcCompat="@drawable/doc_avatar" />
 
             <TextView
                 android:id="@+id/id_text"
-                android:layout_width="135dp"
-                android:layout_height="29dp"
+                android:layout_width="125dp"
+                android:layout_height="18dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="Id"
                 android:textAlignment="center"
                 android:textColor="#000"
-                android:textSize="14sp"
+                android:textSize="10sp"
                 app:fontFamily="sans-serif"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -62,26 +62,26 @@
             <TextView
                 android:id="@+id/specialization_text"
                 android:layout_width="183dp"
-                android:layout_height="45dp"
+                android:layout_height="34dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="Specialization"
                 android:textColor="#000"
-                android:textSize="24dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/name_text" />
 
             <TextView
                 android:id="@+id/phonno_text"
-                android:layout_width="183dp"
-                android:layout_height="45dp"
+                android:layout_width="178dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="Phone No."
                 android:textColor="#000"
-                android:textSize="24dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/specialization_text" />
 
@@ -100,11 +100,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
+        android:id="@+id/recyclerView"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Appointments"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
