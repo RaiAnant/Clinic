@@ -34,8 +34,12 @@ class MedicationAdaptor( val context: Context) : RecyclerView.Adapter<Medication
         fun bind(medication: Medication_item) {
             name.text = medication.doctorName
             disease_name.text = medication.diseaseName
-            prescribed_on.text = medication.startDate.toString()
-            end_date.text = medication.endDate.toString()
+
+            prescribed_on.text = TimeUtils.getDateString(medication.startDate)
+
+            val noOfDays = (medication.endDate - medication.startDate)/86400000
+            end_date.text = "$noOfDays days"
+
             var temp: String = ""
             for(medicineItem in medication.medicines) {
                 temp += "\n"+medicineItem.name+"\t\t"+medicineItem.quantity

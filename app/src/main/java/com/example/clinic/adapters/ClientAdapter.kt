@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clinic.AddMedication
+import com.example.clinic.Medication_Page
 import com.example.clinic.Model.Appointment
 import com.example.clinic.Model.Doctor
 import com.example.clinic.R
@@ -51,7 +52,10 @@ class ClientAdapter(var context: Context):
 //                    //No button clicked
 //                }
             (view as CardView).setOnClickListener {
-//                var intent: Intent = Intent(context, )
+                var intent: Intent = Intent(context, Medication_Page::class.java)
+                intent.putExtra("uid", appointment.clientId)
+                intent.putExtra("name", appointment.clientName)
+                context.startActivity(intent)
             }
         }
 

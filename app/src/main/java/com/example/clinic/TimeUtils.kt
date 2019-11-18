@@ -1,5 +1,6 @@
 package com.example.clinic
 
+import java.text.SimpleDateFormat
 import java.util.*
 
 object TimeUtils {
@@ -12,5 +13,10 @@ object TimeUtils {
         currentInstance.set(Calendar.MILLISECOND, 0)
 
         return currentInstance.timeInMillis
+    }
+
+    fun getDateString(timeStamp : Long) : String {
+        val f = SimpleDateFormat("dd-MMM")
+        return f.format(Date(timeStamp))
     }
 }

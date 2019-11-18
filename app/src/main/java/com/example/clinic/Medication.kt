@@ -26,7 +26,7 @@ class Medication : AppCompatActivity() {
 
     val medicines = ArrayList<Medicine>()
 
-    val databaseRef = FirebaseDatabase.getInstance().getReference("medications/dhruv/")
+    val databaseRef = FirebaseDatabase.getInstance().getReference("medications/" + Medication_Page.patientIDText)
 
     private lateinit var medicationAdaptor : MedicineAdaptor
 

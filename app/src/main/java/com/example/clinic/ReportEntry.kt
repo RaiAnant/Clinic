@@ -1,5 +1,6 @@
 package com.example.clinic
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +38,7 @@ class ReportEntry : AppCompatActivity() {
 
 
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             imageBitmap = data!!.extras.get("data") as Bitmap
             imageView2.setImageBitmap(imageBitmap)
@@ -71,8 +73,12 @@ class ReportEntry : AppCompatActivity() {
             it.storage.downloadUrl.addOnCompleteListener {
                 Log.d("URL", it.result!!.toString())
 
+                val sharedPref = applicationContext.getSharedPreferences(
+                    getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-                FirebaseDatabase.getInstance().getReference("reports/dhruv/").push().setValue(Report("Dhruv", "Cancer", it.result!!.toString())).addOnCompleteListener {
+
+
+                FirebaseDatabase.getInstance().getReference("reports/"+ Medication_Page.patientIDText).push().setValue(Report(sharedPref.getString(getString(R.string.doc_name), "No Name"), "Disease", it.result!!.toString())).addOnCompleteListener {
                     Toast.makeText(applicationContext,"Report Uploaded",Toast.LENGTH_SHORT).show()
                     val intent = Intent(applicationContext, AddMedication::class.java)
                     startActivity(intent)
