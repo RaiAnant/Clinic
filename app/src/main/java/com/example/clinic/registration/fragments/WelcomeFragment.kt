@@ -68,7 +68,8 @@ class WelcomeFragment : Fragment(), CoroutineScope {
     fun getDetails() {
         if(mAuth.currentUser !=null) {
             Log.v(TAG,"inside getDetails")
-            saveDetails(mAuth.currentUser!!.uid, database.getReference("doctor/" +mAuth.currentUser!!.uid))
+
+            saveDetails(mAuth.currentUser!!.uid, database.getReference("doctor/"+mAuth.currentUser!!.uid))
             showButton()
         }else{
             Log.v(TAG,"inside failed to get details")
