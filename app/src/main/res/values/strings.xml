@@ -7,8 +7,8 @@
     <string name="todo">Todo</string>
     <string name="preference_file_key">preference_file_key</string>
     <string name="pref_Verified">pref_Verified</string>
-    <string name = "pref_loggedIn">pref_loggedIn</string>
-    <string name = "doc_id">doc_id</string>
+    <string name="pref_loggedIn">pref_loggedIn</string>
+    <string name="doc_id">doc_id</string>
     <string name="doc_name">doc_name</string>
     <string name="password">password</string>
     <string name="specialization">specialization</string>
