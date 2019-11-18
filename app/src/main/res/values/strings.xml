@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Clinic</string>
+    <string name="submit">Submit</string>
+    <string name="tap_mic_to_speak">Tap mic to speak...</string>
+    <string name="upload">Upload</string>
+    <string name="take">Take</string>
+    <string name="todo">Todo</string>
+</resources>
