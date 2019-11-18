@@ -2,7 +2,7 @@ package com.example.clinic
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
+
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
